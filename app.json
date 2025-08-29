@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "food_delivery_app",
+    "name": "SavorySwift",
     "slug": "food_delivery_app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/food_delivery_splash_img.avif",
     "scheme": "fooddeliveryapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.savoryswift.app"
     },
     "web": {
       "bundler": "metro",
@@ -31,12 +32,19 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#000000"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9b35d8c5-785f-4121-8879-4f57810764ab"
+      }
+    },
+    "owner": "kesther"
   }
 }
