@@ -1,0 +1,15 @@
+npm install lucide-react-native // for lucide icons implementation
+
+// for using tailwindcss integration (with nativewind)
+npm install nativewind tailwindcss
+npx tailwindcss init
+
+Or with tailwind-rn 
+npm install tailwind-rn
+npx tailwind-rn // for generating the tailwind.json file, this needs to be rerun if new classes are added
+
+npm install react-native-dropdown-picker // for selects
+npx expo install react-native-pager-view react-native-tab-view
+npm install @react-navigation/material-top-tabs
+npm install formik
+npm install yup ( for validation )

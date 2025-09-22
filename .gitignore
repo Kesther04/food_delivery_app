@@ -38,5 +38,6 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# IDEs and editors
 .vscode/*
 !.vscode/settings.json
