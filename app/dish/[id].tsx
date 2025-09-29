@@ -5,12 +5,23 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { data } from "@/data/dishes"; 
 import { useEffect, useState } from "react";
 
+interface dishProp{
+    id:number;
+    name:string;
+    image:string;
+    restaurant:string;
+    price:number;
+    rating:number;
+    location:string;
+    desc:string;
+} 
+
 export default function DishScreen () {
     const { id } = useLocalSearchParams(); 
     const router = useRouter();
     const styles = createStyles();
     const [liked, setLiked] = useState<string[]>([]);
-    const [dish, setDish] = useState({
+    const [dish, setDish] = useState<dishProp>({
         id:0,
         name:"",
         image:"",
