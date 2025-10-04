@@ -1,4 +1,4 @@
-import { useUserContext } from "@/context/UserContext";
+// import { useUserContext } from "@/context/UserContext";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TextInput, Pressable, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from 'yup'; // for form validation
-import { users } from "@/data/users";
+import { useAuthContext } from "@/context/AuthContext";
+import { signup } from "@/api/auth.api";
+// import { users } from "@/data/users";
+
 // Validation schema with Yup
 const SignUpSchema = Yup.object().shape({
-    username: Yup.string().min(3, "Too short, must be at least 3 characters").required("Username is required"),
+    name: Yup.string().min(3, "Too short, must be at least 3 characters").required("Username is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().min(6, "Too short").required("Password is required"),
 });
@@ -18,24 +21,45 @@ const SignUpSchema = Yup.object().shape({
 export default function SignUp() {
     const styles = createStyles();
     const [visible, setVisible] = useState(false);
-    const { setUser, user } = useUserContext();
+    // const { setUser, user } = useUserContext();
+    const { setToken, auth} = useAuthContext();
     const router = useRouter();
+
     return (
       <SafeAreaView style={{ flex: 1, padding: 10, backgroundColor:"white" }} >
         <Text style={{ fontSize: 24, marginBottom: 20, fontWeight:500 }}>Sign Up</Text>
         <Text style={{ marginBottom: 20, color: "gray" }}>Please enter your details to create an account.</Text>
         <Formik   
-          initialValues={{ username:"", email: "", password: "" }}
+          initialValues={{ name:"", email: "", password: "" }}
           validationSchema={SignUpSchema}
           onSubmit={(values) => {
             // You can call your API here
-            users.push(values);
-            setUser(users[users.length-1]);
-            
-            if (user !== null) {
-              router.push("/(main)"); 
+            const fetchUser = async () => {
+              try {
+                const data = await signup(values);
+                console.log(data);
+                if (data != null) {
+                  setToken(data.token)
+                }
+              } catch (error: any) {
+                console.error("Error Occured:",error);
+                return alert (error.response.data.message);
+              } finally {
+                if (auth != null) {
+                  router.push(`/(main)`);
+                }
+                console.log("Form submitted:", values);
+              }
             }
-            console.log("Form submitted:", values);
+              
+            fetchUser();
+            // users.push(values);
+            // setUser(users[users.length-1]);
+            
+            // if (user !== null) {
+            //   router.push("/(main)"); 
+            // }
+            // console.log("Form submitted:", values);
             
           }}
         >
@@ -53,13 +77,13 @@ export default function SignUp() {
                   <TextInput
                   placeholder="Enter Username.."
                   placeholderTextColor={"gray"}
-                  style={(errors.username && touched.username) ? [styles.input, styles.errInput] : styles.input }
-                  onChangeText={handleChange("username")}
-                  onBlur={handleBlur("username")}
-                  value={values.username}
+                  style={(errors.name && touched.name) ? [styles.input, styles.errInput] : styles.input }
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  value={values.name}
                   />
-                  {touched.username && errors.username && (
-                  <Text style={styles.error}>{errors.username}</Text>
+                  {touched.name && errors.name && (
+                  <Text style={styles.error}>{errors.name}</Text>
                   )}
               </View>
 

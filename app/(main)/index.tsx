@@ -1,10 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import Animated, {LinearTransition} from "react-native-reanimated";
 import { data } from "../../data/dishes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import { allDishes } from "@/api/dish.api";
 
 export default function Home() {
   const styles = createStyles();
@@ -15,13 +16,30 @@ export default function Home() {
   const categories= ["Popular","Meals","Fast Food","Drinks & Desserts","Snacks"];
   const [currentCat, setCurrentCat] = useState(""); 
   const router = useRouter();
+  const [dishData,setDishData] = useState(null);
+  // const [loading,setLoading] = useState(false);
 
-  const goToDish = (id: number) => {
+  const goToDish = (id: string) => {
     // navigation logic to go to dish screen with the id
-    setFocusedFood(id.toString() === focusedFood ? null : id.toString());
+    setFocusedFood(id.toString() === focusedFood ? null : id);
     // navigate to dish screen with id
     router.push(`/dish/${id}`);
   }
+
+  useEffect(()=>{
+
+    const fetchDishes = async () => {
+      try {
+        const data =  await allDishes();
+        console.log(data);
+        setDishData(data);   
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchDishes();
+  },[]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor:"white" }} edges={['left', 'right', 'bottom']}>
@@ -74,8 +92,8 @@ export default function Home() {
       {/* foodCards */}
       <Animated.FlatList 
         contentContainerStyle={styles.foodCategory}
-        data={data}
-        keyExtractor={(item) => item.id.toString()}
+        data={dishData}
+        keyExtractor={(item) => item._id}
         numColumns={2} // 👈 2 cards per row
         columnWrapperStyle={{ justifyContent: "space-between", paddingHorizontal: 8 }}
         itemLayoutAnimation={LinearTransition}
@@ -83,28 +101,28 @@ export default function Home() {
           <View style={styles.foodItem}>
 
             <Pressable style={{overflow:"hidden",borderTopLeftRadius: 10,borderTopRightRadius: 10}} 
-            onPress={() => goToDish(item.id)}>
+            onPress={() => goToDish(item._id)}>
             {/* image */}
             <Image
-              source={{ uri: item.image }}
+              source={{ uri: item.imageUrl }}
               style={focusedFood === item.name ? [styles.foodImg, { transform: [{ scale: 1.2 }] }] : styles.foodImg}
             />
             </Pressable>
 
               <Ionicons 
-                name={liked.includes(item.id.toString()) ? "heart":"heart-outline"} 
+                name={liked.includes(item._id) ? "heart":"heart-outline"} 
                 size={24} 
-                color={liked.includes(item.id.toString()) ? "red" : "white"}  
+                color={liked.includes(item._id) ? "red" : "white"}  
                 style={styles.heart} 
                 onPress={() => 
-                  setLiked(prev => liked.includes(item.id.toString()) ? prev.filter(i => i !== item.id.toString()) : [...prev, item.id.toString()]
+                  setLiked(prev => liked.includes(item._id) ? prev.filter(i => i !== item._id) : [...prev, item._id]
                 )} 
               />
             <View style={styles.foodText}>
 
               <Text style={{fontWeight: "bold",fontSize: 16}}>{item.name}</Text>
               <Text>{item.restaurant}</Text>
-              <Text>{item.location}</Text>
+              <Text>{item.address}</Text>
               <View style={{ flexDirection: "row", gap: 2 }}>
                 <Text>N{item.price}</Text>
                 <Text>

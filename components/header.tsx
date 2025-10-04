@@ -1,17 +1,19 @@
-import { useUserContext } from "@/context/UserContext";
+// import { useUserContext } from "@/context/UserContext";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
 import { Animated, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CartIcon from "./cartIcon";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function TabHeader() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [dropDownValue, setDropDownValue] = useState<string | null>(null);
   const dropDownItems = ["Restauraunt Listings", "Notifications", "Help & Support", "Settings", "Logout"];
   const styles = createStyles();
-  const { logout } = useUserContext();
-
+  // const { logout } = useUserContext();
+  const { logout } = useAuthContext();
+  
   // animated value
   const slideAnim = useRef(new Animated.Value(-200)).current; // start hidden
   const [modalVisible, setModalVisible] = useState(false);

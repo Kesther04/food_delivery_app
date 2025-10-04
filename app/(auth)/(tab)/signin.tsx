@@ -1,12 +1,14 @@
-import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { useUserContext } from "@/context/UserContext";
+import { useEffect, useState } from "react";
+// import { useUserContext } from "@/context/UserContext";
 import { useRouter } from "expo-router";
-import { users } from "@/data/users";
+// import { users } from "@/data/users";
+import { signin } from "@/api/auth.api";
+import { useAuthContext } from "@/context/AuthContext";
 
 // Validation schema with Yup
 const SignInSchema = Yup.object().shape({
@@ -17,9 +19,12 @@ const SignInSchema = Yup.object().shape({
 export default function SignIn() {
   const styles = createStyles();
   const [visible,setVisible] = useState(false);
-  const { setUser, user } = useUserContext();
+  // const { setUser, user } = useUserContext();
+  const { setToken, auth } = useAuthContext();
   const router = useRouter();
 
+  // if (loading) return <ActivityIndicator size="large"/>
+  
   return (
     <SafeAreaView style={{ flex: 1, padding: 10, backgroundColor:"white" }}>
       <Text style={{ fontSize: 24, marginBottom:20, fontWeight: 500}}>Sign In</Text>
@@ -29,17 +34,37 @@ export default function SignIn() {
         validationSchema={SignInSchema}
         onSubmit={(values) => {
           // You can call your API here
-          let realUser = users.filter(user => values.email === user.email && values.password === user.password);
-          if (realUser.length > 0) {
-            setUser(realUser[0]);
-          }else{
-            return alert("Invalid Credentials");
+          const fetchUser = async () => {
+            try {
+              const data = await signin(values.email,values.password);
+              console.log(data);
+              if (data != null) {
+                setToken(data.token)
+              }
+            } catch (error: any) {
+              console.error("Error Occured:",error);
+              return alert (error.response.data.message);
+            } finally {
+              if (auth != null) {
+                router.push(`/(main)`);
+              }
+              console.log("Form submitted:", values);
+            }
           }
+          
+          fetchUser();
+          
+          // let realUser = users.filter(user => values.email === user.email && values.password === user.password);
+          // if (realUser.length > 0) {
+          //   setUser(realUser[0]);
+          // }else{
+          //   return alert("Invalid Credentials");
+          // }
 
-          if (user != null) {
-            router.push(`/(main)`);
-          }
-          console.log("Form submitted:", values);
+          // if (user != null) {
+          //   router.push(`/(main)`);
+          // }
+          
         }}
       >
         {({

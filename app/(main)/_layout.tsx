@@ -1,17 +1,18 @@
   import { Redirect, Tabs } from "expo-router"
   import { Ionicons } from "@expo/vector-icons";
   import { Feather } from "@expo/vector-icons";
-  import { useUserContext } from "@/context/UserContext";
+  // import { useUserContext } from "@/context/UserContext";
   import TabHeader from "@/components/header";
+import { useAuthContext } from "@/context/AuthContext";
   
   export default function MainTabLayout() {
-    const { user, loading} = useUserContext();
-      
+    // const { user, loading} = useUserContext();
+    const { auth, loading } = useAuthContext();
     if (loading) {
       return null; // or splash screen / loader
     }
 
-    if (!user) {
+    if (!auth) {
       // Navigate user to (auth) stack if not logged in
       return <Redirect href="./(auth)/(tab)/signin" />;
     }

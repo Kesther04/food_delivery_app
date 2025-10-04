@@ -4,17 +4,19 @@ import "react-native-reanimated";
 import { Stack, useRouter } from "expo-router";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { UserProvider } from "@/context/UserContext";
+// import { UserProvider } from "@/context/UserContext";
 import CartIcon from "../components/cartIcon";
 import { Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { AuthProvider } from "@/context/AuthContext";
+
 export default function RootLayout() {
   // representing the layouts for every screen in my application
   const router = useRouter();
   const styles = createStyles();
   return (
     <GestureHandlerRootView>
-      <UserProvider>
+      <AuthProvider>
         <SafeAreaProvider>
           <Stack screenOptions={{headerShadowVisible: false }}>
             <Stack.Screen name="(auth)" options={{headerShown: false}}/>
@@ -37,7 +39,7 @@ export default function RootLayout() {
             <Stack.Screen name="+not-found" options={{headerShown: false }} />
           </Stack>
         </SafeAreaProvider>
-      </UserProvider>
+      </AuthProvider>
     </GestureHandlerRootView>
   );
 }

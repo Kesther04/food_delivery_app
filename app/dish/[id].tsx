@@ -4,38 +4,53 @@ import { Image, Pressable, StyleSheet, Text , View} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { data } from "@/data/dishes"; 
 import { useEffect, useState } from "react";
+import { getDish } from "@/api/dish.api";
 
 interface dishProp{
-    id:number;
+    _id:string;
     name:string;
-    image:string;
-    restaurant:string;
+    imageUrl:string;
+    restaurantName:string;
     price:number;
     rating:number;
-    location:string;
-    desc:string;
+    reviewCount:number;
+    address:string;
+    description:string;
+    category:string;
 } 
 
 export default function DishScreen () {
-    const { id } = useLocalSearchParams(); 
+    const  id  = useLocalSearchParams().id as string; 
     const router = useRouter();
     const styles = createStyles();
     const [liked, setLiked] = useState<string[]>([]);
     const [dish, setDish] = useState<dishProp>({
-        id:0,
+        _id:"",
         name:"",
-        image:"",
-        restaurant:"",
+        imageUrl:"",
+        restaurantName:"",
         price:0,
         rating:0,
-        location:"",
-        desc:""
+        reviewCount:0,
+        address:"",
+        description:"",
+        category:""
     });
     const [cartCount, setCartCount] = useState(0);
-
+    
     useEffect(()=>{
-        let dishData = data.filter(item => item.id.toString() == id);
-        setDish(dishData[0]);
+        
+        const fetchDish = async () => {
+            try {
+                const data = await getDish( id );
+                console.log(data);
+                setDish(data);
+            } catch (error) {
+             console.error(error);   
+            }
+        }   
+        fetchDish();
+
     },[id]);
 
     return (
@@ -44,15 +59,15 @@ export default function DishScreen () {
                 <Text style={styles.foodHeader}>{dish.name}</Text>
 
                 <View>
-                    <Image source={{ uri: dish.image }} style={styles.foodImg} />
+                    <Image source={{ uri: dish.imageUrl }} style={styles.foodImg} />
 
                     <Ionicons
-                        name={liked.includes(dish.id.toString()) ? "heart" : "heart-outline"}
+                        name={liked.includes(dish._id) ? "heart" : "heart-outline"}
                         size={30} 
-                        color={liked.includes(dish.id.toString()) ? "red" : "white"}  
+                        color={liked.includes(dish._id) ? "red" : "white"}  
                         style={styles.heart} 
                         onPress={() => 
-                        setLiked(prev => liked.includes(dish.id.toString()) ? prev.filter(i => i !== dish.id.toString()) : [...prev, dish.id.toString()]
+                        setLiked(prev => liked.includes(dish._id) ? prev.filter(i => i !== dish._id) : [...prev, dish._id]
                         )} 
                     />
                 </View>
@@ -64,8 +79,8 @@ export default function DishScreen () {
                             <Text> <Ionicons name="star" size={10} /> {dish.rating}</Text>
                         </View>
 
-                        <Text><Ionicons name="restaurant" size={12} /> {dish.restaurant}</Text>
-                        <Text><Ionicons name="location" size={12} /> {dish.location}</Text>
+                        <Text><Ionicons name="restaurant" size={12} /> {dish.restaurantName}</Text>
+                        <Text><Ionicons name="location" size={12} /> {dish.address}</Text>
                     </View>
                     <View>
                         <View style={styles.addToCart}>
@@ -79,7 +94,7 @@ export default function DishScreen () {
 
                 <View style={{paddingVertical:10}}>
                     <Text style={{fontSize:16, fontWeight:"bold"}}>Description</Text>
-                    <Text style={styles.foodDesc}>{dish.desc}</Text>
+                    <Text style={styles.foodDesc}>{dish.description}</Text>
                 </View>
 
                 
