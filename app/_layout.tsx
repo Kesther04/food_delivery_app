@@ -18,7 +18,7 @@ export default function RootLayout() {
     <GestureHandlerRootView>
       <AuthProvider>
         <SafeAreaProvider>
-          <Stack screenOptions={{headerShadowVisible: false }}>
+          <Stack screenOptions={{headerShadowVisible: false, animation: "slide_from_right" }}>
             <Stack.Screen name="(auth)" options={{headerShown: false}}/>
             <Stack.Screen name="(main)" options={{headerShown: false}} />
             <Stack.Screen name="(cart)" options={{headerShown: false}}/>

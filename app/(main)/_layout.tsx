@@ -27,6 +27,7 @@ import { useAuthContext } from "@/context/AuthContext";
           header: () => <TabHeader />,
           headerShown: true,
           tabBarStyle: { height: 60, paddingBottom: 5 },
+          animation:"shift"
         }}
       >
         <Tabs.Screen name="index"

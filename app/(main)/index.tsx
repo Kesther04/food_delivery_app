@@ -121,7 +121,7 @@ export default function Home() {
             <View style={styles.foodText}>
 
               <Text style={{fontWeight: "bold",fontSize: 16}}>{item.name}</Text>
-              <Text>{item.restaurant}</Text>
+              <Text>{item.restaurantName}</Text>
               <Text>{item.address}</Text>
               <View style={{ flexDirection: "row", gap: 2 }}>
                 <Text>N{item.price}</Text>
