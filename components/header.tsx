@@ -48,7 +48,7 @@ export default function TabHeader() {
   return (
     <SafeAreaView style={styles.container}>
         {/* Brand Logo */}
-        <Text style={styles.title}>SavorySwift</Text>
+        <Text style={styles.title}>Savory<Text style={{ color: "darkred" }}>Swift</Text></Text>
 
         <View style={styles.iconContainer}>
           {/* Cart Icon */}
@@ -98,19 +98,24 @@ const createStyles = () => {
   return StyleSheet.create({
     container: {
       padding: 16,
-      backgroundColor: "white",
+      backgroundColor: "#fff",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
+      
+      // subtle, optimized shadow
       shadowColor: "#000",
-      shadowOffset: {width: 0, height: 1},
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation:5
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 4,
+      fontFamily: "Inter_400Regular"
     },
+
     title: {
       fontSize: 20,
       fontWeight: "bold",
+      fontStyle:"italic"
     },
     iconContainer: {
       flexDirection: "row",

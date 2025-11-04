@@ -10,11 +10,24 @@ import { Pressable, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthProvider } from "@/context/AuthContext";
 import { store } from "@/states/store";
+import { useFonts, Inter_400Regular, Inter_600SemiBold } from '@expo-google-fonts/inter';
 
 export default function RootLayout() {
   // representing the layouts for every screen in my application
   const router = useRouter();
   const styles = createStyles();
+
+    // 👇 Load Google Fonts
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_600SemiBold,
+  });
+
+  if (!fontsLoaded) {
+    return null; // or <AppLoading /> for smoother experience
+  }
+
+
   return (
     <GestureHandlerRootView>
       <Provider store={store}>

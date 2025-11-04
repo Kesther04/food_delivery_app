@@ -32,7 +32,6 @@ export default function Home() {
       const dishes = await allDishes();
       const user = await userProfile();
       setDishData(dishes);
-      console.log(user.favorites);
       dispatch(setFavorites(user.favorites || []));
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -80,7 +79,7 @@ export default function Home() {
   }
   
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor:"white" }} edges={['left', 'right', 'bottom']}>
+    <SafeAreaView style={styles.homeContainer} edges={['left', 'right', 'bottom']}>
 
       {/* searchBar */}
       <View style={styles.searchBar}>
@@ -185,6 +184,9 @@ function createStyles() {
       alignItems: "center",
       backgroundColor: "white",
     },
+    homeContainer:{
+      flex: 1, backgroundColor:"white", fontFamily: "Inter_400Regular"
+    },
     searchBar:{
       paddingVertical:4,
       paddingHorizontal:2,
@@ -240,7 +242,7 @@ function createStyles() {
       shadowOffset: {width: 0, height: 1},
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
-      elevation:5,
+      elevation:1,
     },
     foodImg:{
       width: "100%",

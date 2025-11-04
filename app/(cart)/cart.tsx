@@ -90,7 +90,7 @@ export default function CartScreen() {
                 <Text style={[styles.btnText, {color:"#fff"}]}>Clear Cart</Text>
               </TouchableOpacity>
               <TouchableOpacity style={[styles.btn, styles.checkoutBtn]}>
-                <Text style={[styles.btnText, {color:"#333"}]}>Checkout</Text>
+                <Text style={[styles.btnText, {color:"darkred"}]}>Checkout</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   clearBtn: { backgroundColor:"darkred", marginRight: 8 },
-  checkoutBtn: { borderWidth:1, borderColor:"darkred" },
+  checkoutBtn: { borderWidth:1, borderColor:"gray" },
   btnText: { fontWeight: "600" },
   emptyContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
   emptyText: { fontSize: 18, color: "#777", marginBottom: 4 },

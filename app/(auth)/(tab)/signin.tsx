@@ -26,7 +26,7 @@ export default function SignIn() {
   // if (loading) return <ActivityIndicator size="large"/>
   
   return (
-    <SafeAreaView style={{ flex: 1, padding: 10, backgroundColor:"white" }}>
+    <SafeAreaView style={styles.container}>
       <Text style={{ fontSize: 24, marginBottom:20, fontWeight: 500}}>Sign In</Text>
       <Text style={{ marginBottom: 20, color: "gray" }}>Welcome back! Please enter your details.</Text>
       <Formik
@@ -131,6 +131,9 @@ export default function SignIn() {
 
 function createStyles() {
   return StyleSheet.create({
+    container:{
+      flex: 1, padding: 10, backgroundColor:"white", fontFamily: "Inter_400Regular"
+    },
     input: {
       borderWidth: 1,
       borderColor: "gray",

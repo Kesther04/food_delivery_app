@@ -192,6 +192,7 @@ function createStyles() {
       padding: 20,
       flex: 1,
       backgroundColor: "white",
+      justifyContent: "space-between",
     },
     foodHeader: {
       fontSize: 20,
@@ -249,24 +250,24 @@ function createStyles() {
       height: 30,
     },
     cartCalc: {
-      position: "absolute",
-      bottom: 0,
-      left: 0,
+      // position: "absolute",
+      // bottom: 0,
+      // left: 0,
       padding: 20,
       width: "100%",
       backgroundColor: "white",
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
       shadowColor: "#000",
+      borderRadius: 10,
       shadowOffset: { width: 0, height: 1 },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
-      elevation: 5,
+      elevation: 2,
       borderWidth: 0.25,
       borderColor: "lightgray",
+      marginTop: 30
     },
   });
 }
