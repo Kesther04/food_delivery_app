@@ -23,11 +23,13 @@ export default function MainTabLayout() {
 
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "darkred",
-          tabBarInactiveTintColor: "gray",
-          headerShown: false, // disable per-tab header
-          tabBarStyle: { height: 60, paddingBottom: 5 },
-          animation: "shift",
+            tabBarActiveTintColor: "darkred",
+            tabBarInactiveTintColor: "gray",
+            headerShown: false,
+            tabBarStyle: { height: 60, paddingBottom: 5 },
+            tabBarHideOnKeyboard: true,
+            animation: "shift", // smoother than "shift"
+            lazy: false, // render all tabs immediately
         }}
       >
         <Tabs.Screen

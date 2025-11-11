@@ -227,7 +227,8 @@ function createStyles() {
       color:"darkred"
     },
     foodCategory: {
-      paddingVertical: 20
+      paddingVertical: 20,
+      justifyContent:"flex-start",
     },
     foodItem: {
       backgroundColor: "#fff",

@@ -6,7 +6,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider } from "react-redux"
 import CartIcon from "../components/cartIcon";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AuthProvider } from "@/context/AuthContext";
 import { store } from "@/states/store";
@@ -51,6 +51,21 @@ export default function RootLayout() {
                 )
               }} 
             />
+            <Stack.Screen name="menu/[id]"
+              options={{
+                headerShown: true,
+                header: () => (
+                  <SafeAreaView style={styles.container}>
+                    <Pressable style={{ marginBottom: 0 }} onPress={() => router.back()}>
+                        <Ionicons name="arrow-back" size={24} color="black" />
+                    </Pressable> 
+                    <Text style={{fontSize:18,fontWeight:"bold"}}>Our Menu</Text>
+                    <CartIcon/>
+                  </SafeAreaView>
+                )
+              }} 
+            />
+            <Stack.Screen name="(extras)" options={{headerShown: false}}/>
             <Stack.Screen name="+not-found" options={{headerShown: false }} />
           </Stack>
         </SafeAreaProvider>

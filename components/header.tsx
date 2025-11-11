@@ -5,11 +5,18 @@ import { Animated, Modal, Pressable, StyleSheet, Text, View } from "react-native
 import { SafeAreaView } from "react-native-safe-area-context";
 import CartIcon from "./cartIcon";
 import { useAuthContext } from "@/context/AuthContext";
+import { Redirect, router } from "expo-router";
 
 export default function TabHeader() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [dropDownValue, setDropDownValue] = useState<string | null>(null);
-  const dropDownItems = ["Restauraunt Listings", "Notifications", "Help & Support", "Settings", "Logout"];
+  const dropDownItems = [
+    {name:"Restauraunt Listings",link:"restaurantListings"}, 
+    {name:"Notifications", link:"notifications"}, 
+    {name:"Help & Support", link:"helpAndSupport"}, 
+    {name:"Settings", link:"settings"}, 
+    {name:"Logout", link:"Logout"}
+  ];
   const styles = createStyles();
   // const { logout } = useUserContext();
   const { logout } = useAuthContext();
@@ -44,6 +51,9 @@ export default function TabHeader() {
         }, 300); // 300ms matches approximate spring duration
     };
 
+  const goToPage = (page:string) => {
+    router.push(`../(extras)/${page}`);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,16 +83,18 @@ export default function TabHeader() {
                     style={[styles.modalContent, { transform: [{ translateY: slideAnim }] }]}>
                   {dropDownItems.map(item => (
                     <Pressable
-                      key={item}
+                      key={item.name}
                       onPress={() => {
-                        setDropDownValue(item);
+                        setDropDownValue(item.name);
                         hideDropdown();
-                        if (item === "Logout") {
+                        if (item.name === "Logout") {
                           logout();
+                        }else{
+                          goToPage(item.link);
                         }
                       }}
                     >
-                      <Text style={dropDownValue === item ? styles.modalItemSelected : styles.modalItem}>{item}</Text>
+                      <Text style={dropDownValue === item.name ? styles.modalItemSelected : styles.modalItem}>{item.name}</Text>
                     </Pressable>
                   ))}
                 </Animated.View>

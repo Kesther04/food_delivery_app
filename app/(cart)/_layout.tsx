@@ -21,6 +21,7 @@ export default function cartLayout () {
                 )
                 }} 
             />   {/* nested cart screens */}
+            <Stack.Screen name="checkout_flow" />
         </Stack>
     )
 }
