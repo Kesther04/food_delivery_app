@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/states/store";
 import { fetchCart, deleteCartItem, clearUserCart } from "@/states/actions/cartAction";
 import { getDish } from "@/api/dish.api";
+import { router } from "expo-router";
 
 export default function CartScreen() {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,7 +44,7 @@ export default function CartScreen() {
         
         <View>
           <Image source={{ uri: dishDetails[item.dishId]?.imageUrl }} style={styles.dishImage} />
-          <Text style={styles.dishName}>{dishDetails[item.dishId] ? dishDetails[item.dishId].name : "Loading..."}</Text>
+          <Text style={styles.dishName}>{          dishDetails[item.dishId] ? dishDetails[item.dishId].name : "Loading..."}</Text>
           <Text style={styles.detail}>Quantity: {item.quantity}</Text>
           <Text style={styles.detail}>Price: ₦{item.price.toFixed(2)}</Text>
         </View>
@@ -89,7 +90,7 @@ export default function CartScreen() {
               <TouchableOpacity style={[styles.btn, styles.clearBtn]} onPress={handleClearCart}>
                 <Text style={[styles.btnText, {color:"#fff"}]}>Clear Cart</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.btn, styles.checkoutBtn]}>
+              <TouchableOpacity style={[styles.btn, styles.checkoutBtn]} onPress={()=>router.push("./checkout_flow")}>
                 <Text style={[styles.btnText, {color:"darkred"}]}>Checkout</Text>
               </TouchableOpacity>
             </View>
